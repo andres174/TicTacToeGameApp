@@ -14,5 +14,7 @@ public class AddPlayers extends AppCompatActivity {
 
         final EditText jugadorUno = findViewById(R.id.jugadorUnoNombre);
         final EditText jugadorDos = findViewById((R.id.jugadorDosNombre));
+
+        //10:13
     }
 }
