@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isBoxSelectable(0)){
-
+                    performAction((ImageView)view, 0 );
                 }
             }
         });
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isBoxSelectable(1)){
-
+                    performAction((ImageView)view, 1 );
                 }
             }
         });
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isBoxSelectable(2)){
-
+                    performAction((ImageView)view, 2 );
                 }
             }
         });
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isBoxSelectable(3)){
-
+                    performAction((ImageView)view, 3 );
                 }
             }
         });
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isBoxSelectable(4)){
-
+                    performAction((ImageView)view, 4 );
                 }
             }
         });
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isBoxSelectable(5)){
-
+                    performAction((ImageView)view, 5 );
                 }
             }
         });
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isBoxSelectable(6)){
-
+                    performAction((ImageView)view, 6 );
                 }
             }
         });
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isBoxSelectable(7)){
-
+                    performAction((ImageView)view, 7 );
                 }
             }
         });
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isBoxSelectable(8)){
-
+                    performAction((ImageView)view, 8 );
                 }
             }
         });
@@ -164,8 +164,73 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void performAction(){
-        //33:55
+    private void performAction(ImageView imageView, int selectedBoxPosition){
+        boxPositions[selectedBoxPosition] = playerTurn;
+
+        if (playerTurn == 1){
+            imageView.setImageResource(R.drawable.x);
+
+            if (checkPlayerWin()){
+                WinDialog winDialog = new WinDialog(MainActivity.this, jugadorUnoNombre.getText().toString() + "ganó la partida.", MainActivity.this);
+                winDialog.setCancelable(false);
+                winDialog.show();
+            }
+            else if (totalSelectedBoxes == 9){
+                WinDialog winDialog = new WinDialog(MainActivity.this, "Es un empate.", MainActivity.this);
+                winDialog.setCancelable(false);
+                winDialog.show();
+            }
+            else {
+                changePlayerTurn(2);
+                totalSelectedBoxes++;
+            }
+
+        }
+        else {
+            imageView.setImageResource(R.drawable.zero);
+            if (checkPlayerWin()){
+                WinDialog winDialog = new WinDialog(MainActivity.this, jugadorDosNombre.getText().toString() + "ganó la partida.", MainActivity.this);
+                winDialog.setCancelable(false);
+                winDialog.show();
+            } else if (selectedBoxPosition == 9) {
+                WinDialog winDialog = new WinDialog(MainActivity.this, "Es un empate.", MainActivity.this);
+                winDialog.setCancelable(false);
+                winDialog.show();
+            } else {
+                changePlayerTurn(1);
+                totalSelectedBoxes++;
+            }
+        }
+
+    }
+
+    private void changePlayerTurn(int currentPlayerTurn){
+        playerTurn = currentPlayerTurn;
+
+        if (playerTurn == 1){
+            jugadorUnoLayout.setBackgroundResource(R.drawable.round_back_blue_border);
+            jugadorDosLayout.setBackgroundResource(R.drawable.round_back_dark_blue);
+        } else {
+            jugadorDosLayout.setBackgroundResource(R.drawable.round_back_blue_border);
+            jugadorUnoLayout.setBackgroundResource(R.drawable.round_back_dark_blue);
+        }
+
+    }
+
+    private boolean checkPlayerWin(){
+        boolean responde = false;
+
+        for (int i = 0; i < combinationList.size(); i++){
+
+            final int [] combination = combinationList.get(i);
+
+            if (boxPositions[combination[0]] == playerTurn && boxPositions[combination[1]] == playerTurn && boxPositions[combination[2]] == playerTurn){
+                responde = true;
+            }
+
+        }
+
+        return responde;
     }
 
     private boolean isBoxSelectable(int boxPosition){
@@ -174,6 +239,22 @@ public class MainActivity extends AppCompatActivity {
             response = true;
         }
         return response;
+    }
+
+    public void restartMatch () {
+        boxPositions = new int []{0,0,0,0,0,0,0,0,0};
+        playerTurn = 1;
+        totalSelectedBoxes = 1;
+
+        image1.setImageResource(R.drawable.transparente);
+        image2.setImageResource(R.drawable.transparente);
+        image3.setImageResource(R.drawable.transparente);
+        image4.setImageResource(R.drawable.transparente);
+        image5.setImageResource(R.drawable.transparente);
+        image6.setImageResource(R.drawable.transparente);
+        image7.setImageResource(R.drawable.transparente);
+        image8.setImageResource(R.drawable.transparente);
+        image9.setImageResource(R.drawable.transparente);
     }
 
 
