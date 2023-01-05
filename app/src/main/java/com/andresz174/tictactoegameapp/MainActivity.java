@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
             imageView.setImageResource(R.drawable.x);
 
             if (checkPlayerWin()){
-                WinDialog winDialog = new WinDialog(MainActivity.this, jugadorUnoNombre.getText().toString() + "ganó la partida.", MainActivity.this);
+                WinDialog winDialog = new WinDialog(MainActivity.this, jugadorUnoNombre.getText().toString() + " " +"ganó la partida.", MainActivity.this);
                 winDialog.setCancelable(false);
                 winDialog.show();
             }
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         else {
             imageView.setImageResource(R.drawable.zero);
             if (checkPlayerWin()){
-                WinDialog winDialog = new WinDialog(MainActivity.this, jugadorDosNombre.getText().toString() + " ganó la partida.", MainActivity.this);
+                WinDialog winDialog = new WinDialog(MainActivity.this, jugadorDosNombre.getText().toString() + " " + "ganó la partida.", MainActivity.this);
                 winDialog.setCancelable(false);
                 winDialog.show();
             } else if (selectedBoxPosition == 9) {
